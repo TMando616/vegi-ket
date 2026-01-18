@@ -1,8 +1,13 @@
 from django.db import models
 from django.utils.crypto import get_random_string
+import os
 
 def create_id():
     return get_random_string(22)
+
+def upload_image_to(instance, filename): #instanceは各itemが作成されたときのインスタンス
+    item_id = instance.id #create_idによって作成されたid
+    return os.path.join('static', 'items', item_id, filename)
 
 class Item(models.Model):
     id = models.CharField(default=create_id, primary_key=True, max_length=22, editable=False) # create_idの後に（）を付けると都度実行される
@@ -14,6 +19,7 @@ class Item(models.Model):
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(default="", blank=True, upload_to=upload_image_to)    
 
     def __str__(self):
         return self.name
