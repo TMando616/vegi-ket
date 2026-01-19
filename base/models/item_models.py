@@ -9,6 +9,13 @@ def upload_image_to(instance, filename): #instanceは各itemが作成された�
     item_id = instance.id #create_idによって作成されたid
     return os.path.join('static', 'items', item_id, filename)
 
+class Category(models.Model):
+    slug = models.CharField(max_length=32, primary_key=True)
+    name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.name
+
 class Item(models.Model):
     id = models.CharField(default=create_id, primary_key=True, max_length=22, editable=False) # create_idの後に（）を付けると都度実行される
     name = models.CharField(default='', max_length=50)
@@ -20,6 +27,8 @@ class Item(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(default="", blank=True, upload_to=upload_image_to)    
+
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return self.name
