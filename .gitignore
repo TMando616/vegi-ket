@@ -1,3 +1,11 @@
 venv/
 
 secrets/.env*
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django specific
+db.sqlite3
