@@ -9,6 +9,13 @@ def upload_image_to(instance, filename): #instanceは各itemが作成された�
     item_id = instance.id #create_idによって作成されたid
     return os.path.join('static', 'items', item_id, filename)
 
+class Tag(models.Model):
+    slug = models.CharField(max_length=32, primary_key=True)
+    name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.name
+
 class Category(models.Model):
     slug = models.CharField(max_length=32, primary_key=True)
     name = models.CharField(max_length=32)
@@ -29,6 +36,7 @@ class Item(models.Model):
     image = models.ImageField(default="", blank=True, upload_to=upload_image_to)    
 
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.name
