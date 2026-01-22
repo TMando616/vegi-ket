@@ -39,4 +39,4 @@ class Item(models.Model):
     tags = models.ManyToManyField(Tag)
 
     def __str__(self):
-        return self.name
+        return self.name #管理画面で返す値（このnameは上記のname） objectの定義、何を返すか
