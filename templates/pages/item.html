@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<h2>{{ object.name }}</h2>
+<p>残り{{ object.stock }}個</p>
+<p>¥{{ object.price }}（税別）</p>
+<p>{{ object.description }}</p>
+<form action="/cart/add/" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="item_pk" value="{{ object.pk }}">
+    <p>
+        <input type="number" name="quantity" value="1" max="{{ object.stock }}">点
+    </p>
+    <p>
+        <button type="submit" class="btn btn-success">
+            Add to Cart
+        </button>
+    </p>
+</form>
+
+{% endblock main %}
