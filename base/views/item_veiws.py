@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from base.models import Item
 
 
@@ -16,3 +16,7 @@ class IndexListView(ListView):
 #         'object_list': object_list,
 #     }
 #     return render(request, 'page/index.html', context)
+
+class ItemDetailView(DetailView):
+    model = Item
+    template_name = 'pages/item.html'
