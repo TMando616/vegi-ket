@@ -20,5 +20,11 @@ from base import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # Item
+    path('items/<str:pk>/', views.ItemDetailView.as_view()),
+    # itemsと複数形にしているのはRESTの考え方（URLで意味が分かる）
+    # str文字列として指定
+    # 第2引数にどのビューを返すかを指定
+
     path('', views.IndexListView.as_view()), # クラスの場合はas_view()を付ける
 ]
