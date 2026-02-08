@@ -1,2 +1,2 @@
-from .item_veiws import *
-from .cart_veiws import *
+from .item_views import *
+from .cart_views import *
