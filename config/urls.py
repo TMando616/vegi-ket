@@ -20,6 +20,9 @@ from base import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # Cart
+    path("cart/", views.CartListView.as_view()),
+
     # Item
     path('items/<str:pk>/', views.ItemDetailView.as_view()),
     # itemsと複数形にしているのはRESTの考え方（URLで意味が分かる）
