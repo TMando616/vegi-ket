@@ -7,3 +7,8 @@ from collections import OrderedDict
 class CartListView(ListView):
     model = Item
     template_name = 'pages/cart.html'
+
+class AddCartView(View): #View 
+
+    def post(self, request): # postと定義すると、postのリクエストを受け取ることができる
+        pass
