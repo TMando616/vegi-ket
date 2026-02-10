@@ -14,12 +14,15 @@ class AddCartView(View): #View method毎に処理を分けられる
         item_pk = request.POST.get('item_pk')
         quantity = int(request.POST.get('quantity'))
         cart = request.session.get('cart', None)
+
         if cart is None or len(cart) == 0:
-            items = OrderedDict()
+            items = OrderedDict() # インスタンスの作成(collection)、Orderedにしている理由は順序が必要であるため
             cart = {'items': items}
+
         if item_pk in cart['items']:
             cart['items'][item_pk] += quantity
         else:
             cart['items'][item_pk] = quantity
+
         request.session['cart'] = cart
         return redirect('/cart/')
