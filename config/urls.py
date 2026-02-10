@@ -22,6 +22,7 @@ urlpatterns = [
 
     # Cart
     path("cart/", views.CartListView.as_view()),
+    path('cart/add/', views.AddCartView.as_view()),
 
     # Item
     path('items/<str:pk>/', views.ItemDetailView.as_view()),
