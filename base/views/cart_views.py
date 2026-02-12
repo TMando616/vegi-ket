@@ -35,6 +35,15 @@ class CartListView(ListView):
         self.request.session['cart'] = cart
 
         return super().get_queryset()
+    
+    def get_contect_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context["total"] = self.total
+            context["tax\included_total"] = self.tax_included_total
+        except Exception:
+            pass
+        return context
 
 
 class AddCartView(View): #View method毎に処理を分けられる
