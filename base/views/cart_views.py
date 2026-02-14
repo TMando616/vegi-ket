@@ -10,8 +10,9 @@ class CartListView(ListView):
 
 
     # query_set：アイテムのそれぞれのオブジェクトのセットのこと
+    # ListViewが持つメソッド名、同名でoverrideする
     # 今回の修正で選択されたカートのみ返すようにしている
-    def get_queryset(self): # ListViewが持つメソッド名、同名でoverrideする
+    def get_queryset(self): 
         cart = self.request.session.get('cart', None)
 
         if cart is None or len(cart) == 0: # cartがないか0この場合はリダイレクト
@@ -36,11 +37,13 @@ class CartListView(ListView):
 
         return super().get_queryset()
     
-    def get_contect_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    # ListViewが持つメソッドをoverride
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs) # 親のget_context_dataを実施
         try:
+            # 独自の変数を渡す
             context["total"] = self.total
-            context["tax\included_total"] = self.tax_included_total
+            context["tax_included_total"] = self.tax_included_total
         except Exception:
             pass
         return context
