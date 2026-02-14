@@ -73,7 +73,7 @@ def remove_from_cart(request, pk):
     cart = request.session.get('cart', None)
 
     if cart is not None:
-        del cart['cart'][pk]
+        del cart['items'][pk]
         request.session['cart'] = cart
 
     return redirect('/cart/')
