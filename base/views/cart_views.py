@@ -67,3 +67,13 @@ class AddCartView(View): #View method毎に処理を分けられる
 
         request.session['cart'] = cart
         return redirect('/cart/')
+    
+# 削除機能
+def remove_from_cart(request, pk):
+    cart = request.session.get('cart', None)
+
+    if cart is not None:
+        del cart['cart'][pk]
+        request.session['cart'] = cart
+
+    return redirect('/cart/')
