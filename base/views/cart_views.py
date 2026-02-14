@@ -19,7 +19,7 @@ class CartListView(ListView):
             return redirect('/')
         
         # 初期化処理
-        self.qyeryset = []
+        self.queryset = []
         self.total = 0
 
         # cartの中にはitemsがある前提（OrderedDict形式）
@@ -30,7 +30,7 @@ class CartListView(ListView):
             self.queryset.append(obj)
             self.total += obj.subtotal
 
-        self.tax_included_total = int(obj.total * (settings.TAX_RATE + 1))
+        self.tax_included_total = int(self.total * (settings.TAX_RATE + 1))
         cart['total'] = self.total
         cart['tax_included_total'] = self.tax_included_total
         self.request.session['cart'] = cart
