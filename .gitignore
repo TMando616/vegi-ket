@@ -1,6 +1,7 @@
 venv/
 
-secrets/.env*
+secrets/.env.dev
+secrets/.env.prd
 
 # Python bytecode
 __pycache__/
