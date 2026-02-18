@@ -17,3 +17,15 @@ class PaySuccessView(TemplateView):
         del request.session('cart')
 
         return super().get(request, *args, **kwargs)
+    
+class PayCancelView(TemplateView):
+    template_name = 'pages/cancel.html'
+
+    def get(self, request, *args, **kwargs):
+        # 最新のOrderオブジェクトを取得
+
+        # 在庫数と販売数をもとの状態に戻す
+
+        # is_confirmedがFalseであれば削除（仮オーダー削除）
+
+        return super().get(request, *args, **kwargs)
