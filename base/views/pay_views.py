@@ -29,3 +29,8 @@ class PayCancelView(TemplateView):
         # is_confirmedがFalseであれば削除（仮オーダー削除）
 
         return super().get(request, *args, **kwargs)
+
+class PayWithStripe(View):
+
+    def post(self, request, *args, **kwargs):
+        pass
