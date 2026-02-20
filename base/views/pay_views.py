@@ -33,4 +33,18 @@ class PayCancelView(TemplateView):
 class PayWithStripe(View):
 
     def post(self, request, *args, **kwargs):
-        pass
+        cart = request.session.get('cart', None)
+
+        if cart is None or len(cart) == 0:
+            return redirect('/')
+        
+        line_items = []
+
+        for item_pk, quantity in cart['items'].items():
+            item = Item.object.get(pk=item_pk)
+            line_item = create_line_item(
+                item.price,
+                item.name,
+                quantity
+            )
+            line_items.append(line_item)
