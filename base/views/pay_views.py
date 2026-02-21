@@ -30,6 +30,18 @@ class PayCancelView(TemplateView):
 
         return super().get(request, *args, **kwargs)
 
+def create_line_item(unit_amount, name, quantity):
+    return {
+        'price_data': {
+            'currency': 'JPY',
+            'unit_amount': unit_amount,
+            'product_data': {'name': name,}
+        },
+        'quantity': quantity,
+        'tax_rates': [tax_rate.id]
+    }
+
+
 class PayWithStripe(View):# Viewの中でmethodレベルで実装可能（postなど）
 
     def post(self, request, *args, **kwargs): #今回はpostのみ、getなどではアクセスできない
