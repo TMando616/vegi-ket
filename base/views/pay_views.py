@@ -48,3 +48,14 @@ class PayWithStripe(View):
                 quantity
             )
             line_items.append(line_item)
+
+        checkout_session = stripe.checkout.Session.create(
+            # customer_email=request.user.email,
+            payment_method_types=['card'],
+            line_items=line_items,
+            mode='payment',
+            success_url=f'{settings.MY_URL}/pay/success',
+            cancel_url=f'{settings.MY_URL}/pay/cancel',
+        )
+
+        return redirect(checkout_session.url)
