@@ -30,18 +30,22 @@ class PayCancelView(TemplateView):
 
         return super().get(request, *args, **kwargs)
 
-class PayWithStripe(View):
+class PayWithStripe(View):# Viewの中でmethodレベルで実装可能（postなど）
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs): #今回はpostのみ、getなどではアクセスできない
         cart = request.session.get('cart', None)
 
         if cart is None or len(cart) == 0:
+            # cartがない場合はルートへリダイレクト
             return redirect('/')
         
         line_items = []
 
+        # cartがある前提
         for item_pk, quantity in cart['items'].items():
-            item = Item.object.get(pk=item_pk)
+            item = Item.object.get(pk=item_pk) # pkでItemオブジェクトを取得
+
+            # stripeの決済ページを作るメソッド
             line_item = create_line_item(
                 item.price,
                 item.name,
@@ -52,10 +56,10 @@ class PayWithStripe(View):
         checkout_session = stripe.checkout.Session.create(
             # customer_email=request.user.email,
             payment_method_types=['card'],
-            line_items=line_items,
+            line_items=line_items, # 画面に表示するものをここで渡す
             mode='payment',
-            success_url=f'{settings.MY_URL}/pay/success',
-            cancel_url=f'{settings.MY_URL}/pay/cancel',
+            success_url=f'{settings.MY_URL}/pay/success', #成功時URL
+            cancel_url=f'{settings.MY_URL}/pay/cancel', #キャンセル時URL
         )
 
         return redirect(checkout_session.url)
