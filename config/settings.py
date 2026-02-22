@@ -144,3 +144,15 @@ STRIPE_API_SECRET_KEY = env.str('STRIPE_API_SECRET_KEY')
 
 # スキーマ＆ドメイン
 MY_URL = env.str('MY_URL')
+
+# カスタムユーザーモデル
+AUTH_USER_MODEL = 'base.User'
+
+# ログイン関連のURL
+LOGIN_URL = '/login/'
+
+LOGIN_REDIRECT_URL = '/'
+
+LOGOUT_URL = '/logout/'
+
+LOGOUT_REDIRECT_URL = '/login/'
