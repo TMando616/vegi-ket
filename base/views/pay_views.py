@@ -14,7 +14,7 @@ class PaySuccessView(TemplateView):
         # 最新のOrderオブジェクトを取得し、注文確定に変更
 
         # カート情報削除
-        del request.session('cart')
+        del request.session['cart']
 
         return super().get(request, *args, **kwargs)
     
