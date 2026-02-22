@@ -75,3 +75,23 @@ class User(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
     
+# profileモデル
+# Userとの切り分け：Userはコアな内容、Profileは任意の内容
+class Profile(models.Model):
+    # Userとの1対1の関係
+    user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
+    name = models.CharField(default='', blank=True, max_length=50)
+
+    # 注文の際は以下情報が必須になるので、チェック機能が必要
+    zipcode = models.CharField(default='', blank=True, max_length=8)
+    prefecture = models.CharField(default='', blank=True, max_length=50)
+    city = models.CharField(default='', blank=True, max_length=50)
+    address1 = models.CharField(default='', blank=True, max_length=50)
+    address2 = models.CharField(default='', blank=True, max_length=50)
+    tel = models.CharField(default='', blank=True, max_length=15)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
