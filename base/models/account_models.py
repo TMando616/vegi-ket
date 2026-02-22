@@ -6,7 +6,7 @@ from base.models import create_id
 
 # Djangoが標準で装備しているUserモデルをカスタマイズする
 # Userオブジェクトの追加フィールドがある場合など
-# 実装方法はDjangoのドキュメント参照
+# 実装方法はDjangoのドキュメント参照（https://docs.djangoproject.com/ja/3.2/topics/auth/customizing/#a-full-example）
 class UserManager(BaseUserManager):
 
     # 一般ユーザー作成
