@@ -89,9 +89,15 @@ class Profile(models.Model):
     address1 = models.CharField(default='', blank=True, max_length=50)
     address2 = models.CharField(default='', blank=True, max_length=50)
     tel = models.CharField(default='', blank=True, max_length=15)
-    
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
+    
+# OneToOneFieldを同時に作成
+@receiver(post_save, sender=User)
+def create_onetoone(sender, **kwargs):
+    if kwargs['created']:
+        Profile.objects.create(user=kwargs['instance'])
