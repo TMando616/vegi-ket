@@ -97,7 +97,9 @@ class Profile(models.Model):
         return self.name
     
 # OneToOneFieldを同時に作成
+# @で始まるものが関数名の記述：デコレーター、関数実行前に処理が実行
+# post_saveは保存されたタイミング（Userモデルが保存されたタイミング）
 @receiver(post_save, sender=User)
-def create_onetoone(sender, **kwargs):
+def create_onetoone(sender, **kwargs): # **kwargsは可変長引数
     if kwargs['created']:
         Profile.objects.create(user=kwargs['instance'])
