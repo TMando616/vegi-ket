@@ -64,7 +64,7 @@ class PayWithStripe(View):# Viewの中でmethodレベルで実装可能（post�
 
         # cartがある前提
         for item_pk, quantity in cart['items'].items():
-            item = Item.object.get(pk=item_pk) # pkでItemオブジェクトを取得
+            item = Item.objects.get(pk=item_pk) # pkでItemオブジェクトを取得
 
             # stripeの決済ページを作るメソッド
             line_item = create_line_item(
