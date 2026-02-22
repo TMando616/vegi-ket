@@ -2,10 +2,14 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-from base.models import created_at
+from base.models import create_id
 
+# Djangoが標準で装備しているUserモデルをカスタマイズする
+# Userオブジェクトの追加フィールドがある場合など
+# 実装方法はDjangoのドキュメント参照
 class UserManager(BaseUserManager):
 
+    # 一般ユーザー作成
     def create_user(self, username, email, password=None):
         if not email:
             raise ValueError('User must have an email address')
@@ -19,20 +23,28 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
+    # スーパーユーザーの作成
     def create_superuser(self, username, email, password=None):
+
+        # 上記で定義したcreate_userを実施
         user = self.create_user(
             username,
             email,
             password=password,
         )
 
+        # 追加でis_adminを定義
         user.is_admin = True
         user.save(using=self._db)
         return user
-    
+
+
+# Userモデルの定義（基本的なUser機能を継承：AbstractBaseUser）
 class User(AbstractBaseUser):
 
+    # 連番ではなくランダム値としてcreate_idを使用する（item_models.pyで定義）
     id = models.CharField(default=create_id, primary_key=True, max_length=22)
+
     username = models.CharField(max_length=50, unique=True, blank=True, default='匿名')
     email = models.EmailField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
@@ -40,6 +52,8 @@ class User(AbstractBaseUser):
     objects = UserManager()
     USENAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
+
+    # 必須項目の設定、今回はメールアドレスのみ
     REQUIERED_FIELDS = ['email', ]
 
     def __str__(self):
