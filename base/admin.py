@@ -18,6 +18,7 @@ class ProfileInline(admin.StackedInline):
     can_delete = False
 
 class CustomUserAdmin(UserAdmin):
+    # 画面上で２段になる
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password',)}),
         (None, {'fields': ('is_active', 'is_admin',)}),
@@ -28,11 +29,14 @@ class CustomUserAdmin(UserAdmin):
     ordering = ()
     filter_horizontal = ()
 
+    # ユーザーを作成するときの項目
     add_fieldsets = (
         (None, {'fields': ('username', 'email', 'is_active',)}),
     )
 
     add_form = UserCreationForm
+
+    # inlineによってユーザーと同じ画面にプロフィールも表示される
     inlines = (ProfileInline, )
     
 
