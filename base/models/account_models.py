@@ -50,7 +50,7 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     objects = UserManager()
-    USENAME_FIELD = 'username'
+    USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
 
     # 必須項目の設定、今回はメールアドレスのみ
