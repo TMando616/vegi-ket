@@ -64,7 +64,7 @@ class User(AbstractBaseUser):
         # Simplest possible answer: Yes, always
         return True
     
-    def has_module_parms(self, app_label):
+    def has_module_perms(self, app_label):
         "Does the user hace permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
