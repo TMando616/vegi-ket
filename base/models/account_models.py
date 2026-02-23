@@ -54,7 +54,7 @@ class User(AbstractBaseUser):
     EMAIL_FIELD = 'email'
 
     # 必須項目の設定、今回はメールアドレスのみ
-    REQUIERED_FIELDS = ['email', ]
+    REQUIRED_FIELDS = ['email', ]
 
     def __str__(self):
         return self.email
