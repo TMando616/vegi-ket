@@ -16,3 +16,14 @@ class SignUpView(CreateView):
     # 親のCreaeViewのOverride
     def form_valid(self, form):
         return super().form_valid(form)
+    
+# ログイン処理
+# LoginViewというクラス名だと継承元と被る
+class Login(LoginView):
+    template_name = 'pages/login_signup.html'
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        return super().form_invalid(form)
