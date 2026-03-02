@@ -27,3 +27,14 @@ class Login(LoginView):
     
     def form_invalid(self, form):
         return super().form_invalid(form)
+
+class AccountUpdateView(UpdateView):
+    model = get_user_model()
+    template_name = 'pages/account.html'
+    fields = ('username', 'email')
+    success_url = '/account/'
+
+    def get_object(self):
+        # URL変数ではなく、現在のユーザーから直接pkを取得
+        self.kwargs['pk'] = self.request.user.pk
+        return super().get_object()
