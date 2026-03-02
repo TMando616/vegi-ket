@@ -31,9 +31,10 @@ class Login(LoginView):
 class AccountUpdateView(UpdateView):
     model = get_user_model()
     template_name = 'pages/account.html'
-    fields = ('username', 'email')
-    success_url = '/account/'
+    fields = ('username', 'email') # この書き方はタプル
+    success_url = '/account/' # 更新後も同じページ
 
+    # 親のget_objectをoverride
     def get_object(self):
         # URL変数ではなく、現在のユーザーから直接pkを取得
         self.kwargs['pk'] = self.request.user.pk
