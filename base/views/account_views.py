@@ -39,3 +39,14 @@ class AccountUpdateView(UpdateView):
         # URL変数ではなく、現在のユーザーから直接pkを取得
         self.kwargs['pk'] = self.request.user.pk
         return super().get_object()
+    
+class ProfileUpdateView(UpdateView):
+    model = Profile
+    template_name = 'pages/profile.html'
+    fields = ('name', 'zipcode', 'prefecture', 'city', 'address', 'address2', 'tel')
+    success_url = '/profile/'
+
+    def get_object(self):
+        # URL変数ではなく、現在のユーザーから直接pkを取得
+        self.kwargs['pk'] = self.request.user.pk
+        return super().get_object()
