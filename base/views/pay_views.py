@@ -3,10 +3,11 @@ from django.views.generic import View, TemplateView
 from django.conf import settings
 from base.models import Item
 import stripe
+from django.contrib.auth.mixins import LoginRequiredMixin # ログイン必須を指定できる
 
 stripe.api_key = settings.STRIPE_API_SECRET_KEY
 
-class PaySuccessView(TemplateView):
+class PaySuccessView(LoginRequiredMixin, TemplateView):
     template_name = 'pages/success.html'
 
     # 決済が完了するためカート情報を削除する
@@ -18,7 +19,7 @@ class PaySuccessView(TemplateView):
 
         return super().get(request, *args, **kwargs)
     
-class PayCancelView(TemplateView):
+class PayCancelView(LoginRequiredMixin, TemplateView):
     template_name = 'pages/cancel.html'
 
     def get(self, request, *args, **kwargs):
@@ -51,7 +52,7 @@ def create_line_item(unit_amount, name, quantity):
     }
 
 
-class PayWithStripe(View):# Viewの中でmethodレベルで実装可能（postなど）
+class PayWithStripe(LoginRequiredMixin, View):# Viewの中でmethodレベルで実装可能（postなど）
 
     def post(self, request, *args, **kwargs): #今回はpostのみ、getなどではアクセスできない
         cart = request.session.get('cart', None)

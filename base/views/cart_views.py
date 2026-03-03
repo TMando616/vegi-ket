@@ -3,8 +3,11 @@ from django.conf import settings
 from django.views.generic import View, ListView
 from base.models import Item
 from collections import OrderedDict
+from django.contrib.auth.mixins import LoginRequiredMixin # ログイン必須を指定できる
+from django.contrib.auth.decorators import login_required
 
-class CartListView(ListView):
+
+class CartListView(LoginRequiredMixin, ListView):
     model = Item #すべてのアイテムを返している→セッション情報などに即したアイテムにしたい
     template_name = 'pages/cart.html'
 
@@ -49,7 +52,7 @@ class CartListView(ListView):
         return context
 
 
-class AddCartView(View): #View method毎に処理を分けられる
+class AddCartView(LoginRequiredMixin, View): #View method毎に処理を分けられる
 
     def post(self, request): # postと定義すると、postのリクエストを受け取ることができる
         item_pk = request.POST.get('item_pk')
@@ -69,6 +72,7 @@ class AddCartView(View): #View method毎に処理を分けられる
         return redirect('/cart/')
     
 # 削除機能
+@login_required #関数の場合はLoginRequiredMixinではなくこちらを使う
 def remove_from_cart(request, pk):
     cart = request.session.get('cart', None)
 
